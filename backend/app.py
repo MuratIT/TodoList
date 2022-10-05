@@ -1,17 +1,21 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 
 from Users import user_routers
+from TodoList import todo_list_router
 
 from settings import settings
 
 app = FastAPI()
+router = APIRouter(prefix=settings.base_url)
 
-app.include_router(
+router.include_router(
     user_routers,
-    prefix=settings.base_url
 )
 
+router.include_router(
+    todo_list_router,
+)
 
-@app.get('/')
-async def root():
-    return {"hello": "world"}
+app.include_router(
+    router
+)
