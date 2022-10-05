@@ -15,7 +15,11 @@ router = APIRouter(
 )
 
 
-@router.get('/', response_model=List[ReadAllTodoList])
+@router.get(
+    '/',
+    response_model=List[ReadAllTodoList],
+    description="Request to get all lists without tasks"
+)
 async def todolist(
         user: User = Depends(current_active_user),
         db: AsyncSession = Depends(get_async_session)
@@ -23,7 +27,11 @@ async def todolist(
     return await read_todolist(user, db)
 
 
-@router.post('/create', response_model=ReadTodoList)
+@router.post(
+    '/create',
+    response_model=ReadTodoList,
+    description="Request to create a list"
+)
 async def todolist_create(
         create_todo_list: CreateTodoList,
         user: User = Depends(current_active_user),
@@ -32,7 +40,11 @@ async def todolist_create(
     return await create_todolist(create_todo_list, user, db)
 
 
-@router.get('/{id}', response_model=ReadTodoList)
+@router.get(
+    '/{id}',
+    response_model=ReadTodoList,
+    description="Request to get a list by id with tasks"
+)
 async def todolist_id(
         id: int,
         user: User = Depends(current_active_user),
@@ -41,7 +53,10 @@ async def todolist_id(
     return await read_todolist_id(id, user, db)
 
 
-@router.patch('/update/{id}', response_model=ReadTodoList)
+@router.patch(
+    '/update/{id}',
+    response_model=ReadTodoList
+)
 async def todolist_update(
         id: int,
         update_todo_list: UpdateTodoList,
@@ -51,7 +66,10 @@ async def todolist_update(
     return await update_todolist(id, update_todo_list, user, db)
 
 
-@router.delete('/delete{id}', response_model=ReadTodoList)
+@router.delete(
+    '/delete{id}',
+    response_model=ReadTodoList
+)
 async def todolist_delete(
         id: int,
         user: User = Depends(current_active_user),
